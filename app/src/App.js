@@ -10,6 +10,8 @@ import {
   Main,
   textStyle,
   SyncIndicator,
+  ContextMenu,
+  ContextMenuItem,
   Tabs,
 } from "@aragon/ui";
 import styled from "styled-components";
@@ -31,7 +33,31 @@ function App() {
         fields={["Id", "Reason"]}
         entries={appState.archivers}
         renderEntry={({ id, reason }) => {
-          return [<p>{id}</p>, <p>{reason}</p>];
+          return [
+            <div
+              css={`
+                display: inline-flex;
+                word-break: break-all;
+              `}
+            >
+              <p>{id}</p>
+            </div>,
+            <div
+              css={`
+                display: inline-flex;
+                word-break: break-all;
+              `}
+            >
+              <p>{reason}</p>
+            </div>,
+          ];
+        }}
+        renderEntryActions={({ id, reason }) => {
+          return (
+            <ContextMenu>
+              <ContextMenuItem>Remove Member</ContextMenuItem>
+            </ContextMenu>
+          );
         }}
       />
     </Main>
@@ -44,5 +70,9 @@ const Buttons = styled.div`
   grid-gap: 40px;
   margin-top: 20px;
 `;
+
+const Field = text => {
+  return <Text></Text>;
+};
 
 export default App;
