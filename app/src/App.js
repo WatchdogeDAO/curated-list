@@ -1,46 +1,32 @@
-import React from 'react'
-import { useAragonApi } from '@aragon/api-react'
+import React from "react";
+import { useAragonApi } from "@aragon/api-react";
 import {
   Box,
   Button,
   GU,
-  Header,
   IconMinus,
   IconPlus,
   Main,
+  textStyle,
   SyncIndicator,
   Tabs,
-  Text,
-  textStyle,
-} from '@aragon/ui'
-import styled from 'styled-components'
+} from "@aragon/ui";
+import styled from "styled-components";
+import AppHeader from "./components/AppHeader";
 
 function App() {
-  const { api, appState, path, requestPath } = useAragonApi()
-  const { count, isSyncing } = appState
+  const { api, appState, path, requestPath } = useAragonApi();
+  const { count, isSyncing } = appState;
 
-  const pathParts = path.match(/^\/tab\/([0-9]+)/)
-  const pageIndex = Array.isArray(pathParts)
-    ? parseInt(pathParts[1], 10) - 1
-    : 0
+  const pathParts = path.match(/^\/tab\/([0-9]+)/);
+  const pageIndex = Array.isArray(pathParts) ? parseInt(pathParts[1], 10) - 1 : 0;
 
   return (
     <Main>
       {isSyncing && <SyncIndicator />}
-      <Header
-        primary="Counter"
-        secondary={
-          <span
-            css={`
-              ${textStyle('title2')}
-            `}
-          >
-            {count}
-          </span>
-        }
-      />
+      <AppHeader />
       <Tabs
-        items={['Tab 1', 'Tab 2']}
+        items={["Tab 1", "Tab 2"]}
         selected={pageIndex}
         onChange={index => requestPath(`/tab/${index + 1}`)}
       />
@@ -51,7 +37,7 @@ function App() {
           justify-content: center;
           text-align: center;
           height: ${50 * GU}px;
-          ${textStyle('title3')};
+          ${textStyle("title3")};
         `}
       >
         Count: {count}
@@ -74,7 +60,7 @@ function App() {
         </Buttons>
       </Box>
     </Main>
-  )
+  );
 }
 
 const Buttons = styled.div`
@@ -82,6 +68,6 @@ const Buttons = styled.div`
   grid-auto-flow: column;
   grid-gap: 40px;
   margin-top: 20px;
-`
+`;
 
-export default App
+export default App;
