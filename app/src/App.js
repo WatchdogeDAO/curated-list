@@ -3,6 +3,7 @@ import { useAragonApi } from "@aragon/api-react";
 import {
   Box,
   Button,
+  DataView,
   GU,
   IconMinus,
   IconPlus,
