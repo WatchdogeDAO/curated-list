@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useAragonApi } from "@aragon/api-react";
 import {
   Box,
@@ -12,12 +12,15 @@ import {
   SyncIndicator,
   ContextMenu,
   ContextMenuItem,
+  SidePanel,
   Tabs,
 } from "@aragon/ui";
 import styled from "styled-components";
 import AppHeader from "./components/AppHeader";
+import SidePanelContent from "./components/SidePanelContent";
 
 function App() {
+  const [sidePanelOpened, setSidePanelOpened] = useState(false);
   const { api, appState, path, requestPath } = useAragonApi();
   const { count, isSyncing } = appState;
 
@@ -27,8 +30,7 @@ function App() {
   return (
     <Main>
       {isSyncing && <SyncIndicator />}
-      <AppHeader />
-
+      <AppHeader onMainClick={() => setSidePanelOpened(true)} />
       <DataView
         fields={["Id", "Reason"]}
         entries={appState.archivers}
@@ -60,6 +62,13 @@ function App() {
           );
         }}
       />
+      <SidePanel
+        title="Add Archiver"
+        opened={sidePanelOpened}
+        onClose={() => setSidePanelOpened(false)}
+      >
+        <SidePanelContent />
+      </SidePanel>
     </Main>
   );
 }

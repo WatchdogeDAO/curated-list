@@ -1,7 +1,7 @@
 import React from "react";
 import { Button, GU, Header, IconPlus, textStyle, Tag } from "@aragon/ui";
 
-const AppHeader = () => (
+const AppHeader = ({ onMainClick }) => (
   <Header
     css={`
       ${textStyle("title2")};
@@ -21,7 +21,9 @@ const AppHeader = () => (
         </div>
       </>
     }
-    secondary={<Button mode="strong" label="Add Member" icon={<IconPlus />} />}
+    secondary={
+      <Button mode="strong" label="Add Member" icon={<IconPlus />} onClick={onMainClick} />
+    }
   />
 );
 
