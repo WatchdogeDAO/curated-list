@@ -1,4 +1,4 @@
-pragma solidity ^0.6.11;
+pragma solidity ^0.4.24;
 
 import "@aragon/os/contracts/apps/AragonApp.sol";
 
@@ -12,7 +12,7 @@ contract CuratedList is AragonApp {
         bool isArchiver;
         string reason;
     }
-    mapping(string => Archiver) public archivers;
+    mapping(bytes32 => Archiver) public archivers;
 
     /// ACL
     bytes32 public constant ADD_ARCHIVER_ROLE = keccak256("ADD_ARCHIVER_ROLE");
@@ -37,7 +37,8 @@ contract CuratedList is AragonApp {
         external
         auth(ADD_ARCHIVER_ROLE)
     {
-        archivers[twitterId] = Archiver({isArchiver: true, reason: reason});
+        bytes32 idAsBytes32 = stringToBytes32(twitterId);
+        archivers[idAsBytes32] = Archiver({isArchiver: true, reason: reason});
     }
 
     /**
@@ -49,7 +50,8 @@ contract CuratedList is AragonApp {
         external
         auth(REMOVE_ARCHIVER_ROLE)
     {
-        Archiver storage archiver = archivers[twitterId];
+        bytes32 idAsBytes32 = stringToBytes32(twitterId);
+        Archiver storage archiver = archivers[idAsBytes32];
         archiver.isArchiver = false;
         archiver.reason = reason;
     }
@@ -59,6 +61,26 @@ contract CuratedList is AragonApp {
      * @param twitterId The id of the user. Not the @handle.
      */
     function isArchiver(string twitterId) public view returns (bool) {
-        return archivers[twitterId].isArchiver;
+        bytes32 idAsBytes32 = stringToBytes32(twitterId);
+        return archivers[idAsBytes32].isArchiver;
+    }
+
+    /**
+     * @notice Helper function. Turns a string into bytes32.
+     * @param source The string to convert.
+     */
+    function stringToBytes32(string memory source)
+        internal
+        pure
+        returns (bytes32 result)
+    {
+        bytes memory tempEmptyStringTest = bytes(source);
+        if (tempEmptyStringTest.length == 0) {
+            return 0x0;
+        }
+
+        assembly {
+            result := mload(add(source, 32))
+        }
     }
 }
