@@ -1,7 +1,7 @@
 {
-  "name": "counter-last",
-  "author": "Placeholder-author",
-  "description": "An application for Aragon",
+  "name": "Curated List",
+  "author": "Watchdog DAO",
+  "description": "A simple list that a DAO can manage.",
   "details_url": "/meta/details.md",
   "source_url": "https://<placeholder-repository-url>",
   "icons": [
