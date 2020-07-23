@@ -26,40 +26,14 @@ function App() {
     <Main>
       {isSyncing && <SyncIndicator />}
       <AppHeader />
-      <Tabs
-        items={["Tab 1", "Tab 2"]}
-        selected={pageIndex}
-        onChange={index => requestPath(`/tab/${index + 1}`)}
+
+      <DataView
+        fields={["Id", "Reason"]}
+        entries={appState.archivers}
+        renderEntry={({ id, reason }) => {
+          return [<p>{id}</p>, <p>{reason}</p>];
+        }}
       />
-      <Box
-        css={`
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          text-align: center;
-          height: ${50 * GU}px;
-          ${textStyle("title3")};
-        `}
-      >
-        Count: {count}
-        <Buttons>
-          <Button
-            display="icon"
-            icon={<IconMinus />}
-            label="Decrement"
-            onClick={() => api.decrement(1).toPromise()}
-          />
-          <Button
-            display="icon"
-            icon={<IconPlus />}
-            label="Increment"
-            onClick={() => api.increment(1).toPromise()}
-            css={`
-              margin-left: ${2 * GU}px;
-            `}
-          />
-        </Buttons>
-      </Box>
     </Main>
   );
 }

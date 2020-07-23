@@ -16,29 +16,18 @@ module.exports = {
   preDao: async ({ log }, { web3, artifacts }) => {},
 
   // Called after a dao is deployed.
-  postDao: async (
-    { dao, _experimentalAppInstaller, log },
-    { web3, artifacts }
-  ) => {},
+  postDao: async ({ dao, _experimentalAppInstaller, log }, { web3, artifacts }) => {},
 
   // Called after the app's proxy is created, but before it's initialized.
-  preInit: async (
-    { proxy, _experimentalAppInstaller, log },
-    { web3, artifacts }
-  ) => {},
+  preInit: async ({ proxy, _experimentalAppInstaller, log }, { web3, artifacts }) => {},
 
   // Called after the app's proxy is initialized.
-  postInit: async (
-    { proxy, _experimentalAppInstaller, log },
-    { web3, artifacts }
-  ) => {},
+  postInit: async ({ proxy, _experimentalAppInstaller, log }, { web3, artifacts }) => {},
 
   // Called when the start task needs to know the app proxy's init parameters.
   // Must return an array with the proxy's init parameters.
-  getInitParams: async ({ log }, { web3, artifacts }) => {
-    return [42]
-  },
+  getInitParams: async ({ log }, { web3, artifacts }) => {},
 
   // Called after the app's proxy is updated with a new implementation.
   postUpdate: async ({ proxy, log }, { web3, artifacts }) => {},
-}
+};
