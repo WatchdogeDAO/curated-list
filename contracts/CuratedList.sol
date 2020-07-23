@@ -4,8 +4,8 @@ import "@aragon/os/contracts/apps/AragonApp.sol";
 
 contract CuratedList is AragonApp {
     /// Events
-    event ArchiverAdded(address indexed entity, uint256 step);
-    event ArchiverRemoved(address indexed entity, uint256 step);
+    event ArchiverAdded(bytes32 indexed id, string reason);
+    event ArchiverRemoved(bytes32 indexed id, string reason);
 
     /// State
     struct Archiver {
@@ -21,10 +21,16 @@ contract CuratedList is AragonApp {
     );
 
     function initialize() public onlyInit {
-        archivers["994080276"] = Archiver({
+        bytes32 idAsBytes32 = stringToBytes32("994080276");
+        archivers[idAsBytes32] = Archiver({
             isArchiver: true,
             reason: "QmXQyJuamVbjwVdiVYJthWv4G1ezHtqYKxDUPu5o7oxkeY"
         });
+        emit ArchiverAdded(
+            idAsBytes32,
+            "QmXQyJuamVbjwVdiVYJthWv4G1ezHtqYKxDUPu5o7oxkeY"
+        );
+
         initialized();
     }
 
@@ -39,6 +45,7 @@ contract CuratedList is AragonApp {
     {
         bytes32 idAsBytes32 = stringToBytes32(twitterId);
         archivers[idAsBytes32] = Archiver({isArchiver: true, reason: reason});
+        emit ArchiverAdded(idAsBytes32, reason);
     }
 
     /**
@@ -54,6 +61,7 @@ contract CuratedList is AragonApp {
         Archiver storage archiver = archivers[idAsBytes32];
         archiver.isArchiver = false;
         archiver.reason = reason;
+        emit ArchiverRemoved(idAsBytes32, reason);
     }
 
     /**

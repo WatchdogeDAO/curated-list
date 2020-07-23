@@ -1,13 +1,13 @@
 {
   "roles": [
     {
-      "name": "Increment the counter",
-      "id": "INCREMENT_ROLE",
+      "name": "Add a new archiver",
+      "id": "ADD_ARCHIVER_ROLE",
       "params": []
     },
     {
-      "name": "Decrement the counter",
-      "id": "DECREMENT_ROLE",
+      "name": "Remove an archiver",
+      "id": "REMOVE_ARCHIVER_ROLE",
       "params": []
     }
   ],
@@ -35,5 +35,5 @@
       "network": "mainnet"
     }
   },
-  "path": "contracts/CounterApp.sol"
+  "path": "contracts/CuratedList.sol"
 }
